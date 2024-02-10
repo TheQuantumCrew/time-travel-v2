@@ -27,12 +27,7 @@ export default function Home() {
     <section className="flex h-screen lg:flex-row">
       <section className="flex h-screen w-full  flex-col justify-between p-9 lg:h-auto">
         <Wrapper>
-          <div className="mx-auto flex max-w-2xl flex-col justify-between">
-            <span
-              className={`-mt-14 inline-block text-[24px] font-bold text-black dark:text-white`}
-            >
-              Please select date you want to travel
-            </span>
+          <div className="flex h-screen mx-auto">
             <GitHubActivityCalendar
               username={"ncnthien"}
               transformData={selectLastHalfYear}
@@ -43,21 +38,6 @@ export default function Home() {
               }}
               throwOnError
             />
-            <div className="">
-              <Button
-                size="default"
-                className="w-full font-bold"
-                variant="link"
-              >
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  className="pb-1 dark:text-zinc-800 text-zinc-100"
-                >
-                  Repo
-                </a>{" "}
-              </Button>
-            </div>
           </div>
         </Wrapper>
       </section>

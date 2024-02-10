@@ -1,23 +1,29 @@
 "use client";
 
+import { generateTestData } from "@/components/github-calendar/utils";
 import {
   Activity,
   ApiErrorResponse,
   ApiResponse,
   ThemeInput,
   Year,
-} from "@/.next/types/app";
-import { transformData } from "@/components/github-calendar/utils";
-import React, {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
-import Calendar, {
-  type Props as ActivityCalendarProps,
-  Skeleton,
-} from "react-activity-calendar";
+} from "@/types";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { addDays, format } from "date-fns";
+import { FunctionComponent, useCallback, useEffect, useState } from "react";
+import { Skeleton } from "react-activity-calendar";
+import Calendar, { ActivityCalendarProps } from "./calendar";
+import { groupByWeeks } from "./utils";
+
+import { Button } from "@/components/ui/button";
+import { Calendar as UICalendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { DateRange } from "react-day-picker";
 
 export interface Props extends Omit<ActivityCalendarProps, "data" | "theme"> {
   username: string;
@@ -40,7 +46,6 @@ async function fetchCalendarData(username: string): Promise<ApiResponse> {
       `Fetching GitHub contribution data for "${username}" failed: ${(data as ApiErrorResponse).error}`
     );
   }
-
   return data as ApiResponse;
 }
 const GitHubActivityCalendar: FunctionComponent<Props> = ({
@@ -54,7 +59,13 @@ const GitHubActivityCalendar: FunctionComponent<Props> = ({
 }) => {
   const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: new Date(2023, 6, 1),
+    to: addDays(new Date(2024, 1, 1), 20),
+  });
   const [error, setError] = useState<Error | null>(null);
+
+  console.log({ date });
 
   const fetchData = useCallback(() => {
     setLoading(true);
@@ -86,20 +97,61 @@ const GitHubActivityCalendar: FunctionComponent<Props> = ({
     totalCount: `{{count}} contributions in the last year`,
   };
 
-  const totalCount = data.total["lastYear"];
-  console.log(
-    transformData(data.contributions, transformFn),
-    "transformData(data.contributions, transformFn)"
-  );
   return (
-    <Calendar
-      data={transformData(data.contributions, transformFn)}
-      theme={theme}
-      labels={Object.assign({}, defaultLabels, labels)}
-      totalCount={transformFn && transformTotalCount ? undefined : totalCount}
-      {...props}
-      maxLevel={4}
-    />
+    <div className="flex flex-col justify-center items-center">
+      <div className={cn("grid gap-2")}>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              id="date"
+              variant={"outline"}
+              className={cn(
+                "w-[300px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date?.from ? (
+                date.to ? (
+                  <>
+                    {format(date.from, "LLL dd, y")} -{" "}
+                    {format(date.to, "LLL dd, y")}
+                  </>
+                ) : (
+                  format(date.from, "LLL dd, y")
+                )
+              ) : (
+                <span>Pick a date</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <UICalendar
+              initialFocus
+              mode="range"
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={setDate}
+              numberOfMonths={2}
+            />
+          </PopoverContent>
+        </Popover>
+      </div>
+      <Calendar
+        data={generateTestData({
+          maxLevel: 10,
+          interval: {
+            start: date?.from || new Date("2023-06-01"),
+            end: date?.to || new Date("2024-01-01"),
+          },
+        })}
+        theme={theme}
+        labels={Object.assign({}, defaultLabels, labels)}
+        totalCount={transformFn && transformTotalCount ? undefined : 10}
+        {...props}
+        maxLevel={4}
+      />
+    </div>
   );
 };
 
