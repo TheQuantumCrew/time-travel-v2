@@ -42,6 +42,8 @@ export const metadata: Metadata = {
     "Boilerplate",
     "Template",
     "shadcn-ui",
+    "time-travel",
+    "fake-git-history",
   ],
   authors: [{ name: "vienhuynh.dev", url: "https://vienhuynh.dev" }],
   creator: "Vien Huynh",
@@ -54,20 +56,14 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Time Travel",
-    description: "Time travel github activities",
-    url: "https://Time Travel.vercel.app",
+    description: "Time travel: Fake github activities",
+    url: "https://time-travel.vienhuynh.dev",
     siteName: "Time Travel",
     images: [
       {
-        url: "https://Clone.vercel.app/og.png",
+        url: "https://time-travel.vienhuynh.dev/og.png",
         width: 800,
         height: 600,
-      },
-      {
-        url: "https://Clone.vercel.app/og-dark.png",
-        width: 1800,
-        height: 1600,
-        alt: "Time travel github activities",
       },
     ],
     locale: "en-US",

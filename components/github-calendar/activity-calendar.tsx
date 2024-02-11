@@ -58,38 +58,38 @@ const GitHubActivityCalendar: FunctionComponent<Props> = ({
   ...props
 }) => {
   const [data, setData] = useState<ApiResponse | null>(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [date, setDate] = useState<DateRange | undefined>({
     from: new Date(2023, 6, 1),
     to: addDays(new Date(2024, 1, 1), 20),
   });
-  const [error, setError] = useState<Error | null>(null);
+  // const [error, setError] = useState<Error | null>(null);
 
-  console.log({ date });
+  // console.log({ date });
 
-  const fetchData = useCallback(() => {
-    setLoading(true);
-    setError(null);
-    fetchCalendarData(username)
-      .then(setData)
-      .catch(setError)
-      .finally(() => setLoading(false));
-  }, [username]);
+  // const fetchData = useCallback(() => {
+  //   setLoading(true);
+  //   setError(null);
+  //   fetchCalendarData(username)
+  //     .then(setData)
+  //     .catch(setError)
+  //     .finally(() => setLoading(false));
+  // }, [username]);
 
-  useEffect(fetchData, [fetchData]);
+  // useEffect(fetchData, [fetchData]);
 
-  // React error boundaries can't handle asynchronous code, so rethrow.
-  if (error) {
-    if (throwOnError) {
-      throw error;
-    } else {
-      return <div>{errorMessage}</div>;
-    }
-  }
+  // // React error boundaries can't handle asynchronous code, so rethrow.
+  // if (error) {
+  //   if (throwOnError) {
+  //     throw error;
+  //   } else {
+  //     return <div>{errorMessage}</div>;
+  //   }
+  // }
 
-  if (loading || !data) {
-    return <Skeleton {...props} loading />;
-  }
+  // if (loading || !data) {
+  //   return <Skeleton {...props} loading />;
+  // }
 
   const theme = props.theme;
 
