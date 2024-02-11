@@ -1,11 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { Icons } from "@/components/icons";
 import { useTheme } from "next-themes";
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
   return (
     <div className="flex border items-center bg-[#fafafa] shado dark:bg-zinc-900 dark:border-zinc-800 p-2 px-4 w- justify-between rounded-full">
       <button
