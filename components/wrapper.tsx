@@ -38,7 +38,7 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
     <>
       <div className="flex w-full items-center justify-between">
         <Link
-          href="/"
+          href="https://github.com/N3iV/time-travel"
           className={`flex items-center text-2xl font-bold dark:text-white`}
         >
           Time Travel.
@@ -48,7 +48,6 @@ export default function Wrapper({ children }: { children: React.ReactNode }) {
             <span className="">v0.2</span>
           </span>
         </Link>
-
         <ThemeToggle />
       </div>
       {children}

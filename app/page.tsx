@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button";
 import GitHubActivityCalendar, {
   Props,
 } from "@/components/github-calendar/activity-calendar";
+import { Link } from "lucide-react";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export default function Home() {
   const selectLastHalfYear: Props["transformData"] = (contributions) => {
@@ -27,7 +29,7 @@ export default function Home() {
     <section className="flex h-screen lg:flex-row">
       <section className="flex h-screen w-full  flex-col justify-between p-9 lg:h-auto">
         <Wrapper>
-          <div className="flex h-screen mx-auto">
+          <div className="flex flex-col justify-center items-center h-screen mx-auto">
             <GitHubActivityCalendar
               username={"ncnthien"}
               transformData={selectLastHalfYear}
@@ -38,6 +40,18 @@ export default function Home() {
               }}
               throwOnError
             />
+            <div className=" mt-4 items-center">
+              <a
+                target="_blank"
+                href="https://github.com/N3iV"
+                className="flex items-center"
+              >
+                <p className="mr-2 text-white font-bold">
+                  Follow me on Github for more updates!
+                </p>
+                <GitHubLogoIcon />
+              </a>
+            </div>
           </div>
         </Wrapper>
       </section>
