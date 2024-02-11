@@ -137,6 +137,7 @@ const GitHubActivityCalendar: FunctionComponent<Props> = ({
           </PopoverContent>
         </Popover>
       </div>
+
       <Calendar
         data={generateTestData({
           maxLevel: 10,

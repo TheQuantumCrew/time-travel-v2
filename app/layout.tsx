@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Provider } from "@/components/provider";
 
 import localFont from "next/font/local";
+import { Toaster } from "@/components/ui/toaster";
 
 const spaceMono = localFont({
   src: [
@@ -90,6 +91,7 @@ export default function RootLayout({
             className={`text-zinc-700 bg-white dark:text-zinc-400 dark:bg-black`}
           >
             {children}
+            <Toaster />
           </main>
         </Provider>
       </body>
